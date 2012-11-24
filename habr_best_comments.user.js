@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name bestHabrComments
-// @description hide worst comments and show only high-plus comments
+// @description filter comments by rating
 // @author Alexander Ivantsov
 // @license MIT
 // @version 1.0
@@ -19,7 +19,7 @@ function filterComments(){
     var minRating = parseInt($("#min-comment-rating").val());
     var rating;
 
-    /* выставляем класс 'cool_comment' для каментав с нужным рейтингом */
+    /* выставляем класс 'cool_comment' для каментов с нужным рейтингом */
     $(".comment_item").each(function(){
         rating = parseInt($(this).find(".mark .score").html());        
         if(isNaN(rating)) rating = -1 * parseInt($(this).find(".mark .score").html().replace("–", ""));
@@ -28,7 +28,7 @@ function filterComments(){
     });
 
     /* 
-     * скрываем отстойные каменты
+     * скрываем ненужные каменты
      * добавляем кнопку, чтобы показать ответы для данного камента 
     */
     $(".comment_item").each(function(){
@@ -49,7 +49,7 @@ function refreshComments(){
     });
 };
 
-var toggleBtn = 0;  // 0 - фильтр, 1 - вернуть назад
+var toggleBtn = 0;  // 0 - включить фильтр, 1 - сбросить фильтр
 
 $("#filter-comments").click(function(){
     /* запуск фильтра */
