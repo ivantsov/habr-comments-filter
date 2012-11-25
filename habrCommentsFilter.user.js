@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name bestHabrComments
+// @name habrCommentsFilter
 // @description filter comments by rating
 // @author Alexander Ivantsov
 // @license MIT
