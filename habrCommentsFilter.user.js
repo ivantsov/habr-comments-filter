@@ -23,7 +23,7 @@ if ('undefined' == typeof __PAGE_SCOPE_RUN__) {
   })();
 
   return;
-}
+};
 
 
 function filterComments(){
@@ -146,6 +146,6 @@ function filterComments(){
             }
         });
     })(jQuery);
-}
+};
 
 filterComments();
