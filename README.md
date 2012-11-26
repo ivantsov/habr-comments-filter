@@ -1,4 +1,5 @@
 HabrCommentsFilter
 ==================
 Attention!
-If you have Chrome than you need chrome vesion of script, other version supported opera and firefox.
+==========
+If your browser is Chrome then you need a chrome vesion of script, another version supports Opera and Firefox.
