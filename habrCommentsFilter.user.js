@@ -3,125 +3,173 @@
 // @description filter comments by rating
 // @author Alexander Ivantsov
 // @license MIT
-// @version 1.1
+// @version 1.2
 // @include http://habrahabr.ru/post/*
 // @include http://habrahabr.ru/company/*/blog/*
 // ==/UserScript==
 
-var inp = "<p style='color: #fff'>Мин рейтинг: <input id='min-comment-rating' style='width: 30px' type='text' value='0' /></p>";
-var btn = "<button id='filter-comments' style='margin-top: 10px'>Отфильтровать камменты</button>";
-var div = "<div class='comments_control' style='opacity: 0.5; position: fixed; top: 50px; right: 0; background-color: #2e2e2e; padding: 10px 30px 10px 10px'><div style='position: relative'>" + inp + btn + "<a id='hidePanel' href='javascript:void(0)' style='color: #fff; position: absolute; right: -25px; top: -5px; text-decoration: none; font-size: 20px; font-weight: bold; text-shadow: 0 1px 0 #FFFFFF'>×</a></div></div>";
+$(function(){
 
-$("body").append(div);
+	var FilterForm = {
+		isShow: true,
+        isFilter: false,
+        form: null,
 
-function filterComments() {
-    var minRating = parseInt($("#min-comment-rating").val());
-    var rating;
+		create: function(){
+			var htmlForm = "<div id='comments-filter-form' style='background-color: #f0f0e7; position: fixed; top: 50px; right: 0; padding: 20px 40px; border: 2px solid #777;'>" +
+				"<div style='position: relative'>" +
+					"<p style='color: #000'>" +
+						"Средний рейтинг: <span style='width: 30px; color: #0072b1;'>" + Filter.getAvgRating() + "</span>" +
+					"</p>" +
+					"<p style='color: #000'>" +
+						"Мин рейтинг: <input id='comments-filter-form__inp-min-rating' style='width: 30px' type='number' value='0'>" +
+					"</p>" +
+					"<button id='comments-filter-form__btn' style='margin-top: 10px'>Отфильтровать</button>" +
+				"</div>" +
+			"</div>";
 
-    /* выставляем класс 'cool_comment' для каментов с нужным рейтингом */
-    $(".comment_item").each(function () {
-        rating = parseInt($(this).find(".mark .score").html());
-        if (isNaN(rating)) rating = -1 * parseInt($(this).find(".mark .score").html().replace("–", ""));
+            $("body").append(htmlForm);
 
-        if (rating >= minRating) $(this).addClass("cool_comment");
-    });
+            this.form = $("#comments-filter-form");
+		},
 
-    /*
-     * скрываем ненужные каменты
-     * добавляем кнопку, чтобы показать ответы для данного камента
-     */
-    $(".comment_item").each(function () {
-        if (!$(this).hasClass("cool_comment") && $(this).find(".cool_comment").length == 0) $(this).hide();
-        else if ($(this).hasClass("cool_comment") && $(this).find(".cool_comment").length == 0 && $(this).find(".reply .show_reply").length == 0 && $(this).find(".reply_link").length > 1) $(this).find(".reply").eq(0).append("<a class='show_reply' style='float: right' href='javascript:void(0)'>Показать ответы</a>");
-    });
-};
+        toggle: function(){
+            if(this.isShow){    //  hide
+                this.isShow = false;
 
-/* сброс фильтров */
-function refreshComments() {
-    $(".cool_comment").each(function () {
-        $(this).removeClass("cool_comment");
-        $(this).find(".show_reply").remove();
-    });
+                this.form.animate({
+                    paddingLeft: "+=80",
+                    right: -1 * this.form.width() - 80
 
-    $(".comment_item").each(function () {
-        $(this).show();
-    });
-};
+                }, 1000);
+            }
+            else{   //  show
+                this.isShow = true;
 
-var toggleBtn = 0; // 0 - включить фильтр, 1 - сбросить фильтр
+                this.form.animate({
+                    paddingLeft: "-=80",
+                    right: 0
+                }, 1000);
+            };
+        },
 
-$("#filter-comments").click(function () {
-    /* запуск фильтра */
-    if (!toggleBtn) {
-        $("#filter-comments").css("margin-top", 0);
-        filterComments();
-        toggleBtn = 1;
-        $("#min-comment-rating").parent().slideUp();
-        $(this).html("Сбросить фильтр");
-    }
-    /* сбросить фильтр */
-    else {
-        $("#filter-comments").css("margin-top", "10px");
-        refreshComments();
-        toggleBtn = 0;
-        $("#min-comment-rating").parent().slideDown();
-        $(this).html("Отфильтровать камменты");
+        btnClick: function(elem){
+            if(this.isFilter){
+                this.isFilter = false;
+
+                Filter.refresh();
+
+                this.form.find("p").show();
+
+                elem.html("Отфильтровать");
+            }
+            else{
+                this.isFilter = true;
+
+                Filter.run();
+
+                this.form.find("p").hide();
+
+                elem.html("Сбросить");
+            };
+        }
+	};
+
+    var Filter = {
+        getAvgRating: function(){
+            var count = 0,
+                ratingSum = 0,  //sum of comments rating
+                rating;
+
+            $(".comment_item").each(function(){
+                rating = parseInt($(this).find(".mark .score").html());
+
+                if(isNaN(rating) || rating == 0) return; //    skip comments with not positive rating
+
+                count++;
+                ratingSum += rating;
+            });
+
+            return Math.round(ratingSum/count);
+        },
+
+        run: function(){
+            var minRating = parseInt($("#comments-filter-form__inp-min-rating").val());
+            var rating;
+
+            //  set class 'cool-comment' for comment with needed rating
+            $(".comment_item").each(function(){
+                rating = $(this).find(".mark .score").html();
+
+                if( isNaN(parseInt(rating)) ) rating = -1 * parseInt(rating.replace("–", ""));  //  negative rating
+                else rating = parseInt(rating); //  positive rating
+
+                if(rating >= minRating) $(this).addClass("cool-comment");
+            });
+
+            //  hide useless comments and add 'show comments' button for it
+            $(".comment_item").each(function(){
+                if(!$(this).hasClass("cool-comment") && $(this).find(".cool-comment").length == 0) $(this).hide();
+                else if($(this).hasClass("cool-comment") && $(this).find(".cool-comment").length == 0 && $(this).find(".reply .show-reply").length == 0 && $(this).find(".reply_link").length > 1) $(this).find(".reply").eq(0).append("<a class='show-reply show-reply-hide' style='float: right' href='javascript:void(0)'>Показать ответы</a>");
+            });
+        },
+
+        refresh: function(){
+            $(".cool-comment").each(function(){
+                $(this).removeClass("cool-comment");
+                $(this).find(".show-reply").remove();
+            });
+
+            $(".comment_item").each(function(){
+                $(this).show();
+            });
+        },
+
+        toggleComments: function(elem){
+            var parent;
+
+            if(elem.hasClass("show-reply-hide")){
+                elem.removeClass("show-reply-hide");
+                elem.html("Скрыть ответы");
+
+                parent = elem.closest(".comment_item");
+
+                parent.find(".comment_item").each(function(){
+                    $(this).show();
+                });
+            }
+            else{
+                elem.addClass("show-reply-hide");
+                elem.html("Показать ответы");
+
+                parent = elem.closest(".comment_item");
+
+                parent.find(".comment_item").each(function(){
+                    if(!$(this).hasClass("cool-comment") && $(this).find(".cool-comment").length == 0) $(this).hide();
+                });
+            };
+        }
     };
-});
 
-var togglePanel = 0; // 0 - открыто, 1 - свернуто
+    FilterForm.create();
 
-/* скрыть панель */
-$("#hidePanel").click(function (event) {
-    event.stopPropagation();
+    $("body").on("click", "#comments-filter-form__inp-min-rating", function(){
+        return false;
+    });
 
-    togglePanel = 1;
-    $(".comments_control").animate({
-        right: -$(".comments_control").width() - 30,
-        paddingLeft: "+=20"
-    }, 1000);
-});
+    $("body").on("click", "#comments-filter-form__btn", function(){
+        FilterForm.btnClick($(this));
 
-/* открыть панель */
-$(".comments_control").click(function () {
-    if (togglePanel == 0) return 0;
-    togglePanel = 0;
-    $(this).animate({
-        paddingLeft: "-=20",
-        right: 0
-    }, 1000);
-});
+        return false;
+    });
 
-/* управление прозрачностью панели */
-$(".comments_control").hover(function () {
-    $(this).css("opacity", 1);
-}, function () {
-    $(this).css("opacity", 0.5);
-});
+    //  show and close comments filter form
+    $("body").on("click", "#comments-filter-form", function(){
+        FilterForm.toggle();
+    });
 
-/* показать скрытые ответы */
+    $("body").on("click", ".show-reply", function(){
+        Filter.toggleComments($(this));
+    });
 
-$(".show_reply").live("click", function () {
-    var parent;
-
-    /* если ответы скрыты */
-    if ($(this).html() == "Показать ответы") {
-        $(this).html("Скрыть ответы");
-
-        parent = $(this).closest(".comment_item");
-
-        parent.find(".comment_item").each(function () {
-            $(this).show();
-        });
-    }
-    /* если ответы открыты */
-    else {
-        $(this).html("Показать ответы");
-
-        parent = $(this).closest(".comment_item");
-
-        parent.find(".comment_item").each(function () {
-            if (!$(this).hasClass("cool_comment") && $(this).find(".cool_comment").length == 0) $(this).hide();
-        });
-    }
 });
