@@ -22,7 +22,7 @@ $(function(){
 						"Средний рейтинг: <span style='width: 30px; color: #0072b1;'>" + Filter.getAvgRating() + "</span>" +
 					"</p>" +
 					"<p style='color: #000'>" +
-						"Мин рейтинг: <input id='comments-filter-form__inp-min-rating' style='width: 30px' type='number' value='0'>" +
+						"Мин рейтинг: <input id='comments-filter-form__inp-min-rating' style='width: 30px' type='number' placeholder='0'>" +
 					"</p>" +
 					"<button id='comments-filter-form__btn' style='margin-top: 10px'>Отфильтровать</button>" +
 				"</div>" +

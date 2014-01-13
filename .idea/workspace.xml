@@ -28,17 +28,17 @@
       <file leaf-file-name="habrCommentsFilter.user.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/habrCommentsFilter.user.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="82" column="0" selection-start="2242" selection-end="2242" vertical-scroll-proportion="-1.2418301" vertical-offset="2862" max-vertical-offset="3780">
+            <state line="34" column="0" selection-start="1136" selection-end="1136" vertical-scroll-proportion="0.63398695" vertical-offset="132" max-vertical-offset="3780">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1389629521105" expanded="true" signature="434:542" placeholder="..." />
-                <marker date="1389629521105" expanded="true" signature="565:583" placeholder="..." />
-                <marker date="1389629521105" expanded="true" signature="605:616" placeholder="..." />
-                <marker date="1389629521105" expanded="true" signature="659:687" placeholder="..." />
-                <marker date="1389629521105" expanded="true" signature="759:770" placeholder="..." />
-                <marker date="1389629521105" expanded="true" signature="852:863" placeholder="..." />
-                <marker date="1389629521105" expanded="true" signature="959:975" placeholder="..." />
-                <marker date="1389629521105" expanded="true" signature="3719:3731" placeholder="..." />
+                <marker date="1389630193309" expanded="true" signature="434:542" placeholder="..." />
+                <marker date="1389630193309" expanded="true" signature="565:583" placeholder="..." />
+                <marker date="1389630193309" expanded="true" signature="605:616" placeholder="..." />
+                <marker date="1389630193309" expanded="true" signature="659:687" placeholder="..." />
+                <marker date="1389630193309" expanded="true" signature="759:770" placeholder="..." />
+                <marker date="1389630193309" expanded="true" signature="852:863" placeholder="..." />
+                <marker date="1389630193309" expanded="true" signature="965:981" placeholder="..." />
+                <marker date="1389630193309" expanded="true" signature="3725:3737" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -174,17 +174,17 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/habrCommentsFilter.user.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="0" selection-start="2242" selection-end="2242" vertical-scroll-proportion="-1.2418301" vertical-offset="2862" max-vertical-offset="3780">
+        <state line="34" column="0" selection-start="1136" selection-end="1136" vertical-scroll-proportion="0.63398695" vertical-offset="132" max-vertical-offset="3780">
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1389629521105" expanded="true" signature="434:542" placeholder="..." />
-            <marker date="1389629521105" expanded="true" signature="565:583" placeholder="..." />
-            <marker date="1389629521105" expanded="true" signature="605:616" placeholder="..." />
-            <marker date="1389629521105" expanded="true" signature="659:687" placeholder="..." />
-            <marker date="1389629521105" expanded="true" signature="759:770" placeholder="..." />
-            <marker date="1389629521105" expanded="true" signature="852:863" placeholder="..." />
-            <marker date="1389629521105" expanded="true" signature="959:975" placeholder="..." />
-            <marker date="1389629521105" expanded="true" signature="3719:3731" placeholder="..." />
+            <marker date="1389630193309" expanded="true" signature="434:542" placeholder="..." />
+            <marker date="1389630193309" expanded="true" signature="565:583" placeholder="..." />
+            <marker date="1389630193309" expanded="true" signature="605:616" placeholder="..." />
+            <marker date="1389630193309" expanded="true" signature="659:687" placeholder="..." />
+            <marker date="1389630193309" expanded="true" signature="759:770" placeholder="..." />
+            <marker date="1389630193309" expanded="true" signature="852:863" placeholder="..." />
+            <marker date="1389630193309" expanded="true" signature="965:981" placeholder="..." />
+            <marker date="1389630193309" expanded="true" signature="3725:3737" placeholder="..." />
           </folding>
         </state>
       </provider>
