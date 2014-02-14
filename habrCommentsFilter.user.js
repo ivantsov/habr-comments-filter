@@ -16,8 +16,8 @@ $(function(){
         form: null,
 
 		create: function(){
-			var htmlForm = "<div id='comments-filter-form' style='background-color: #f0f0e7; position: fixed; top: 50px; right: 0; padding: 20px 40px; border: 2px solid #777;'>" +
-				"<div style='position: relative'>" +
+			var htmlForm = "<div id='comments-filter-form' style='background-color: #f0f0e7; position: fixed; top: 50px; right: 0; border: 2px solid #777;'>" +
+				"<div style='position: relative; padding: 20px 40px;'>" +
 					"<p style='color: #000'>" +
 						"Средний рейтинг: <span style='width: 30px; color: #0072b1;'>" + Filter.getAvgRating() + "</span>" +
 					"</p>" +
@@ -26,6 +26,7 @@ $(function(){
 					"</p>" +
 					"<button id='comments-filter-form__btn' style='margin-top: 10px'>Отфильтровать</button>" +
 				"</div>" +
+				"<div id='visible-controller' style='background-color: #42aaff; font-size: 28px; color: #fff; text-align: left; padding-left: 30px; cursor: pointer;'>&#8594;</div>" +
 			"</div>";
 
             $("body").append(htmlForm);
@@ -37,19 +38,18 @@ $(function(){
             if(this.isShow){    //  hide
                 this.isShow = false;
 
-                this.form.animate({
-                    paddingLeft: "+=80",
-                    right: -1 * this.form.width() - 80
+                this.form.find("#visible-controller").html("&#8592;");
 
+                this.form.animate({
+                    right: -1 * this.form.width() + 80
                 }, 1000);
             }
             else{   //  show
                 this.isShow = true;
 
-                this.form.animate({
-                    paddingLeft: "-=80",
-                    right: 0
-                }, 1000);
+                this.form.find("#visible-controller").html("&#8594;");
+
+                this.form.animate({right: 0}, 1000);
             };
         },
 
@@ -82,7 +82,7 @@ $(function(){
                 rating;
 
             $(".comment_item").each(function(){
-                rating = parseInt($(this).find(".mark .score").html());
+                rating = parseInt($(this).find(".mark .score").html(), 10);
 
                 if(isNaN(rating) || rating == 0) return; //    skip comments with not positive rating
 
@@ -94,15 +94,15 @@ $(function(){
         },
 
         run: function(){
-            var minRating = parseInt($("#comments-filter-form__inp-min-rating").val());
+            var minRating = parseInt($("#comments-filter-form__inp-min-rating").val(), 10);
             var rating;
 
             //  set class 'cool-comment' for comment with needed rating
             $(".comment_item").each(function(){
                 rating = $(this).find(".mark .score").html();
 
-                if( isNaN(parseInt(rating)) ) rating = -1 * parseInt(rating.replace("–", ""));  //  negative rating
-                else rating = parseInt(rating); //  positive rating
+                if( isNaN(parseInt(rating)) ) rating = -1 * parseInt(rating.replace("–", ""), 10);  //  negative rating
+                else rating = parseInt(rating, 10); //  positive rating
 
                 if(rating >= minRating) $(this).addClass("cool-comment");
             });
@@ -164,7 +164,7 @@ $(function(){
     });
 
     //  show and close comments filter form
-    $("body").on("click", "#comments-filter-form", function(){
+    $("body").on("click", "#visible-controller", function(){
         FilterForm.toggle();
     });
 
