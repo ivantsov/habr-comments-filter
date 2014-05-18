@@ -3,11 +3,13 @@
 // @description filter comments by rating
 // @author Alexander Ivantsov
 // @license MIT
-// @version 1.2
+// @version 1.2.1
 // @include http://habrahabr.ru/post/*
 // @include http://habrahabr.ru/company/*/blog/*
 // @require http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js
 // ==/UserScript==
+
+this.$ = this.jQuery = jQuery.noConflict(true);
 
 $(function(){
 
