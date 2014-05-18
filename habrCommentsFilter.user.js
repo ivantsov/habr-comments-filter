@@ -6,6 +6,7 @@
 // @version 1.2
 // @include http://habrahabr.ru/post/*
 // @include http://habrahabr.ru/company/*/blog/*
+// @require http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js
 // ==/UserScript==
 
 $(function(){
