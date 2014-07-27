@@ -34,14 +34,12 @@ function FilterView() {
         if (isShow) {
             isShow = false;
             $elem.html(LEFT_ARROW);
-            $form.animate({
-                right: -1 * $form.width() + 80
-            }, 1000);
+            $form.css({right: -1 * $form.width() + 80});
         }
         else {
             isShow = true;
             $elem.html(RIGHT_ARROW);
-            $form.animate({right: 0}, 1000);
+            $form.css({right: 0});
         }
     };
 }

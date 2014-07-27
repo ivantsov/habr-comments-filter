@@ -6,11 +6,14 @@
 // @version 2.0
 // @include http://habrahabr.ru/post/*
 // @include http://habrahabr.ru/company/*/blog/*
-// @require http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.js
 // ==/UserScript==
 
-this.$ = this.jQuery = jQuery.noConflict(true);
+var addScriptTag = function (funcToRun) {
+    var script = document.createElement('script');
+    script.textContent = '(' + funcToRun.toString() + ')()';
+    document.body.appendChild(script);
+};
 
-$(function(){
+addScriptTag(function(){
     include "habr-comments-filter.js"
 });
