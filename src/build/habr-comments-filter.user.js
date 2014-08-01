@@ -3,7 +3,7 @@
 // @description filter comments by rating
 // @author Alexander Ivantsov (shpuntik74@gmail.com)
 // @license MIT
-// @version 2.0
+// @version 2.1
 // @include http://habrahabr.ru/post/*
 // @include http://habrahabr.ru/company/*/blog/*
 // ==/UserScript==
@@ -27,14 +27,16 @@ addScriptTag(function(){
         var isShow = true, $form;
 
         this.create = function (commentsCount, avgRating) {
-            var htmlForm = "<div id='" + FILTER_FORM_ID + "' style='background-color: #f2f2f2; position: fixed; top: 50px; right: 0; border: 2px solid #777;'>" +
-                "<div style='position: relative; padding: 20px 40px;'>" +
+            var htmlForm = "<div id='" + FILTER_FORM_ID + "'style='background-color: #f2f2f2; position: fixed; top: 50px; right: 0; border: 2px solid #777;'>" +
+                "<div style='background-color: #6da3bd; font-size: 28px; color: #fff; text-align: left; padding: 0 5px; cursor: pointer; height: 100%; position: absolute; float: left; z-index: 1000;'>" +
+                "<div id='" + FILTER_VISIBLE_CONTROLLER_ID + "' style='height: 100%; padding: 40px 0;'>&#8594;</div>" +
+                "</div>" +
+                "<div style='position: relative; padding: 20px 10px 20px 50px; float: left;'>" +
                 "<p style='color: #000'>Средний рейтинг: <strong>" + avgRating + "</strong></p>" +
-                "<p style='color: #000'>Мин рейтинг: <input style='width: 40px' id='" + FILTER_MIN_RATING_INPUT_ID + "' type='number'></p>" +
+                "<p style='color: #000'>Мин рейтинг: <input style='width: 40px' id='" + FILTER_MIN_RATING_INPUT_ID + "' type='text'></p>" +
                 "<p>Показано комм: <strong id='" + FILTERED_COMMENTS_COUNT_LABEL_ID + "'>" + commentsCount + "</strong> из <strong>" + commentsCount + "</strong></p>" +
                 "<button id='" + FILTER_RESET_BTN_ID + "' style='margin-top: 10px'>Сбросить фильтр</button>" +
                 "</div>" +
-                "<div id='" + FILTER_VISIBLE_CONTROLLER_ID + "' style='background-color: #6da3bd; font-size: 28px; color: #fff; text-align: left; padding-left: 45px; cursor: pointer; height: 42px'>&#8594;</div>" +
                 "</div>";
 
             $('body').append(htmlForm);
@@ -51,7 +53,7 @@ addScriptTag(function(){
             if (isShow) {
                 isShow = false;
                 $elem.html(LEFT_ARROW);
-                $form.css({right: -1 * $form.width() + 80});
+                $form.css({right: -1 * $form.width() + 35});
             }
             else {
                 isShow = true;
@@ -221,22 +223,33 @@ addScriptTag(function(){
             view.create(commentsCount, avgRating);
         };
 
+        function setMinRating(value) {
+            controller.getFilteredComments(value);
+            controller.run();
+
+            view.setFilteredCommentsCount(controller.getFilteredCommentsCount());
+        }
+
+        function updateMinRatingByOne(value) {
+            var $minRating = $('#' + FILTER_MIN_RATING_INPUT_ID),
+                minRatingValue = parseInt($minRating.val(), 10) || 0,
+                newMinRatingValue = minRatingValue + value;
+
+            $minRating.val(newMinRatingValue);
+            setMinRating(newMinRatingValue);
+        }
+
         this.addHandlers = function () {
             $('#' + FILTER_MIN_RATING_INPUT_ID).on('input', function () {
-                var minRating = $(this).val();
-
-                controller.getFilteredComments(minRating);
-                controller.run();
-
-                view.setFilteredCommentsCount(controller.getFilteredCommentsCount());
+                setMinRating($(this).val());
             });
 
-            $('#' + FILTER_RESET_BTN_ID).on('click', function () {
+            $('#' + FILTER_RESET_BTN_ID).on('click', function (e) {
                 $('#' + FILTER_MIN_RATING_INPUT_ID).val('');
                 controller.reset();
                 view.setFilteredCommentsCount(controller.getCommentsCount());
 
-                return false;
+                e.preventDefault();
             });
 
             $('#'+ FILTER_VISIBLE_CONTROLLER_ID).on('click', function () {
@@ -245,6 +258,23 @@ addScriptTag(function(){
 
             $('body').on('click', '.show-reply', function () {
                 controller.toggleComments($(this));
+            });
+
+            // hotkeys
+            $(document).on('keydown', function (e) {
+                if (e.ctrlKey && e.keyCode === 38) {
+                    updateMinRatingByOne(1);
+
+                    e.preventDefault();
+                }
+            });
+
+            $(document).on('keydown', function (e) {
+                if (e.ctrlKey && e.keyCode === 40) {
+                    updateMinRatingByOne(-1);
+
+                    e.preventDefault();
+                }
             });
         };
     }

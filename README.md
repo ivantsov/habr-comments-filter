@@ -13,3 +13,21 @@ This userscript allows you filter comments by rating on [Habrahabr.ru](http://ha
             - click on the Customize and control -> Settings -> Extensions 
             - open the URL: [chrome://extensions/](chrome://extensions/)
         2. drag the userscript onto the page
+        
+##Hotkeys
+increment min rating: **CTRL + up**         
+decrement min rating: **CTRL + down**       
+      
+##Changelog
+###v2.0
+- rewrite filtering without jQuery
+- rewrite calculating of average rating
+- add instant filter
+- add number of shown comments
+- add support for Firefox and Chrome
+- add tests (Karma and Jasmine)
+- add build with Grunt
+
+###v2.1
+- add hotkeys
+- change design
