@@ -26,7 +26,7 @@ describe('filter controller', function () {
             return shownCommentsCount;
         };
 
-        jasmine.getFixtures().fixturesPath = 'base/tests/';
+        jasmine.getFixtures().fixturesPath = 'base/src/tests/';
 
         beforeEach(function () {
             loadFixtures('fixtures.html');

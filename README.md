@@ -1,10 +1,10 @@
 HabrCommentsFilter
 ==================
-This userscript allows you filter comments by rating on [Habrahabr.ru](http://habrahabr.ru/)
+This userscript allows you filter comments by rating on [Habrahabr.ru](http://habrahabr.ru/) and [Geektimes.ru](http://geektimes.ru/)
 
 ##How to install
 1. get repository
-2. install **src/build/habr-comments-filter.user.js** into your browser    
+2. install **dest/habr-comments-filter.user.js** into your browser    
     * **firefox**:
         1. install [Greasemonkey](https://addons.mozilla.org/ru/firefox/addon/greasemonkey/) addon
         2. drag the userscript onto the page
@@ -31,3 +31,6 @@ decrement min rating: **CTRL + down**
 ###v2.1
 - add hotkeys
 - change design
+
+###v2.2
+- add support Geektimes.ru

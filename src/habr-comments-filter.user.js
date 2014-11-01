@@ -1,11 +1,13 @@
 ﻿// ==UserScript==
 // @name habrCommentsFilter
 // @description filter comments by rating
-// @author Alexander Ivantsov (shpuntik74@gmail.com)
+// @author Alexander Ivantsov (alexivantsiv@ya.ru)
 // @license MIT
-// @version 2.1
+// @version 2.2
 // @include http://habrahabr.ru/post/*
 // @include http://habrahabr.ru/company/*/blog/*
+// @include http://geektimes.ru/post/*
+// @include http://geektimes.ru/company/*/blog/*
 // ==/UserScript==
 
 var addScriptTag = function (funcToRun) {

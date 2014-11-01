@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name habrCommentsFilter
 // @description filter comments by rating
-// @author Alexander Ivantsov (shpuntik74@gmail.com)
+// @author Alexander Ivantsov (alexivantsiv@ya.ru)
 // @license MIT
-// @version 2.1
+// @version 2.2
 // @include http://habrahabr.ru/post/*
 // @include http://habrahabr.ru/company/*/blog/*
+// @include http://geektimes.ru/post/*
+// @include http://geektimes.ru/company/*/blog/*
 // ==/UserScript==
 
 var addScriptTag = function (funcToRun) {
@@ -27,17 +29,17 @@ addScriptTag(function(){
         var isShow = true, $form;
 
         this.create = function (commentsCount, avgRating) {
-            var htmlForm = "<div id='" + FILTER_FORM_ID + "'style='background-color: #f2f2f2; position: fixed; top: 50px; right: 0; border: 2px solid #777;'>" +
-                "<div style='background-color: #6da3bd; font-size: 28px; color: #fff; text-align: left; padding: 0 5px; cursor: pointer; height: 100%; position: absolute; float: left; z-index: 1000;'>" +
-                "<div id='" + FILTER_VISIBLE_CONTROLLER_ID + "' style='height: 100%; padding: 40px 0;'>&#8594;</div>" +
-                "</div>" +
-                "<div style='position: relative; padding: 20px 10px 20px 50px; float: left;'>" +
-                "<p style='color: #000'>Средний рейтинг: <strong>" + avgRating + "</strong></p>" +
-                "<p style='color: #000'>Мин рейтинг: <input style='width: 40px' id='" + FILTER_MIN_RATING_INPUT_ID + "' type='text'></p>" +
-                "<p>Показано комм: <strong id='" + FILTERED_COMMENTS_COUNT_LABEL_ID + "'>" + commentsCount + "</strong> из <strong>" + commentsCount + "</strong></p>" +
-                "<button id='" + FILTER_RESET_BTN_ID + "' style='margin-top: 10px'>Сбросить фильтр</button>" +
-                "</div>" +
-                "</div>";
+            var htmlForm = '<div id="' + FILTER_FORM_ID + '" style="background-color: #f2f2f2; position: fixed; top: 50px; right: 0; border: 2px solid #777;">' +
+                '<div style="background-color: #6da3bd; font-size: 28px; color: #fff; text-align: left; padding: 0 5px; cursor: pointer; height: 100%; position: absolute; float: left; z-index: 1000;">' +
+                '<div id="' + FILTER_VISIBLE_CONTROLLER_ID + '" style="height: 100%; padding: 40px 0;">&#8594;</div>' +
+                '</div>' +
+                '<div style="position: relative; padding: 20px 10px 20px 50px; float: left;">' +
+                '<p style="color: #000">Средний рейтинг: <strong>' + avgRating + '</strong></p>' +
+                '<p style="color: #000">Мин рейтинг: <input style="width: 40px" id="' + FILTER_MIN_RATING_INPUT_ID + '" type="text"></p>' +
+                '<p>Показано комм: <strong id="' + FILTERED_COMMENTS_COUNT_LABEL_ID + '">' + commentsCount + '</strong> из <strong>' + commentsCount + '</strong></p>' +
+                '<button id="' + FILTER_RESET_BTN_ID + '" style="margin-top: 10px">Сбросить фильтр</button>' +
+                '</div>' +
+                '</div>';
 
             $('body').append(htmlForm);
             $form = $('#' + FILTER_FORM_ID);
@@ -102,12 +104,12 @@ addScriptTag(function(){
             filteredCommentsCount = 0;
 
             for (id in comments) {
-                comment = comments[id];
-                parentId = comment.parentId;
-                parent = comments[parentId];
+                if (comments.hasOwnProperty(id)) {
+                    comment = comments[id];
+                    parentId = comment.parentId;
+                    parent = comments[parentId];
 
-                if (comment.rating >= minRating) {
-                    if (!filteredComments[id]) {
+                    if (comment.rating >= minRating && !filteredComments[id]) {
                         comment.isLast = true;
                         filteredComments[id] = comment;
                         filteredCommentsCount += 1;
@@ -134,38 +136,42 @@ addScriptTag(function(){
         };
 
         this.getAvgRating = function () {
-            var squreRatingSum = 0,
+            var squareRatingSum = 0,
                 commentsCount = this.getCommentsCount(),
                 id;
 
             for (id in comments) {
-                squreRatingSum += Math.pow(comments[id].rating, 2);
+                if (comments.hasOwnProperty(id)) {
+                    squareRatingSum += Math.pow(comments[id].rating, 2);
+                }
             }
 
-            return commentsCount > 0 ? Math.round(Math.sqrt(squreRatingSum / commentsCount)) : 0;
+            return commentsCount > 0 ? Math.round(Math.sqrt(squareRatingSum / commentsCount)) : 0;
         };
 
         this.run = function () {
             var idName = '#comment_', $elem, $reply, id;
 
             for (id in comments) {
-                $elem = $(idName + id);
-                $reply = $elem.find('.reply');
+                if (comments.hasOwnProperty(id)) {
+                    $elem = $(idName + id);
+                    $reply = $elem.find('.reply');
 
-                $elem.find(".show-reply").remove();
+                    $elem.find('.show-reply').remove();
 
-                // if comment is last in tree AND open child link doesnt exist AND child exist
-                if (comments[id].isLast && $reply.eq(0).find('.show-reply').length === 0 && $elem.find(".reply_link").length > 1) {
-                    $reply.eq(0).append("<a class='show-reply show-reply-hide' style='float: right' href='javascript:void(0)'>Показать ответы</a>");
+                    // if comment is last in tree AND open child link doesnt exist AND child exist
+                    if (comments[id].isLast && $reply.eq(0).find('.show-reply').length === 0 && $elem.find('.reply_link').length > 1) {
+                        $reply.eq(0).append('<a class="show-reply show-reply-hide" style="float: right" href="javascript:void(0)">Показать ответы</a>');
 
-                    comments[id].isLast = false;
-                }
+                        comments[id].isLast = false;
+                    }
 
-                if (filteredComments[id]) {
-                    $elem.show();
-                }
-                else {
-                    $elem.hide();
+                    if (filteredComments[id]) {
+                        $elem.show();
+                    }
+                    else {
+                        $elem.hide();
+                    }
                 }
             }
         };
@@ -174,9 +180,11 @@ addScriptTag(function(){
             var idName = '#comment_', id;
 
             for (id in comments) {
-                $(idName + id).show()
-                    .find(".show-reply")
-                    .remove();
+                if (comments.hasOwnProperty(id)) {
+                    $(idName + id).show()
+                        .find('.show-reply')
+                        .remove();
+                }
             }
         };
 
@@ -200,7 +208,7 @@ addScriptTag(function(){
                 parent = $elem.closest('.comment_item');
 
                 parent.find('.comment_item').each(function () {
-                    if (!$(this).hasClass('cool-comment') && $(this).find('.cool-comment').length == 0) {
+                    if (!$(this).hasClass('cool-comment') && $(this).find('.cool-comment').length === 0) {
                         $(this).hide();
                     }
                 });
@@ -252,7 +260,7 @@ addScriptTag(function(){
                 e.preventDefault();
             });
 
-            $('#'+ FILTER_VISIBLE_CONTROLLER_ID).on('click', function () {
+            $('#' + FILTER_VISIBLE_CONTROLLER_ID).on('click', function () {
                 view.toggle();
             });
 
