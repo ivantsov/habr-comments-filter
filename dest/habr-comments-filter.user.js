@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name habrCommentsFilter
 // @description filter comments by rating
-// @author Alexander Ivantsov (alexivantsiv@ya.ru)
+// @author Alexander Ivantsov (alexivantsov@ya.ru)
 // @license MIT
 // @version 2.2
 // @include http://habrahabr.ru/post/*
