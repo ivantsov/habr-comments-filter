@@ -8,6 +8,8 @@
 // @include http://habrahabr.ru/company/*/blog/*
 // @include http://geektimes.ru/post/*
 // @include http://geektimes.ru/company/*/blog/*
+// @include http://megamozg.ru/post/*
+// @include http://megamozg.ru/company/*/blog/*
 // ==/UserScript==
 
 var addScriptTag = function (funcToRun) {
