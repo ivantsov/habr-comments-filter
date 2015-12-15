@@ -3,7 +3,7 @@
 // @description filter comments by rating
 // @author Alexander Ivantsov (alexivantsiv@ya.ru)
 // @license MIT
-// @version 2.2
+// @version 2.2.1
 // @include http://habrahabr.ru/post/*
 // @include http://habrahabr.ru/company/*/blog/*
 // @include http://geektimes.ru/post/*

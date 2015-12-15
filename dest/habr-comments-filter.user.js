@@ -3,7 +3,7 @@
 // @description filter comments by rating
 // @author Alexander Ivantsov (alexivantsov@ya.ru)
 // @license MIT
-// @version 2.2
+// @version 2.2.1
 // @include http://habrahabr.ru/post/*
 // @include http://habrahabr.ru/company/*/blog/*
 // @include http://geektimes.ru/post/*
@@ -80,7 +80,7 @@ addScriptTag(function(){
 
             $('.comment_item').each(function () {
                 comment = $(this);
-                rating = parseInt(comment.find('.comment_body').eq(0).find('.score').eq(0).text().replace('–', '-'), 10);
+                rating = parseInt(comment.find('.comment_body').eq(0).find('.js-score').eq(0).text().replace('–', '-'), 10);
                 id = parseInt(comment.prop('id').replace(/[^0-9]+/, ''), 10);
 
                 comments[id] = {
