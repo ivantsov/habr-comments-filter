@@ -20,18 +20,18 @@ export default class App extends Component {
 
         return (
             <div className={styles.container}>
-                <div>Average raiting: {averageRating}</div>
-                <div>{shownCommentsCount} of {totalCommentsCount} comments shown</div>
+                <div className={styles.line}>Средний рейтинг: <strong>{averageRating}</strong></div>
+                <div className={styles.line}>Показано комм: <strong>{shownCommentsCount}</strong> из <strong>{totalCommentsCount}</strong></div>
 
                 <Form
                     minRating={minRating}
-                    onChangeRatingClick={this.onChangeRatingClick}
+                    onChangeRating={this.onChangeRating}
                 />
             </div>
         );
     }
 
-    onChangeRatingClick = (minRating) => {
+    onChangeRating = (minRating) => {
         const shownCommentsCount = filter(minRating);
 
         this.setState({
