@@ -9,7 +9,7 @@ const RatingButton = ({
 }) => (
     <button
         type="button"
-        className={className}
+        className={`btn btn_blue ${className}`}
         onClick={onClick}
     >
         {children}
@@ -19,47 +19,48 @@ const RatingButton = ({
 export default class Form extends Component {
     render() {
         return (
-            <form>
+            <form onSubmit={e => e.preventDefault()}>
                 <div className={styles.ratingContainer}>
                     <RatingButton
-                        className={`btn ${styles.ratingBtnLeft}`}
+                        className={styles.ratingBtnLeft}
                         onClick={() => this.onChangeRatingClick(-1)}
                     >-</RatingButton>
                     <input
                         type="text"
                         value={this.props.minRating}
                         className={styles.input}
-                        onChange={this.onInputChange}
+                        onInput={this.onInput}
                     />
                     <RatingButton
-                        className={`btn ${styles.ratingBtnRight}`}
+                        className={styles.ratingBtnRight}
                         onClick={() => this.onChangeRatingClick(1)}
                     >+</RatingButton>
                 </div>
 
                 <div className={styles.resetBtnContainer}>
                     <button
-                        className="btn btn_blue btn_large"
-                        onClick={() => {
-                        }}
+                        type="button"
+                        className="btn btn_blue btn_mini"
+                        onClick={this.onResetClick}
                     >
-                        Reset
+                        Сбросить
                     </button>
                 </div>
             </form>
         );
     }
 
-    onInputChange = (e) => {
-        const minRating = e.target.value.trim();
-
-        this.setState({minRating});
+    onInput = (e) => {
+        const minRating = parseInt(e.target.value.trim(), 10) || null;
+        this.props.onChangeRating(minRating);
     };
 
     onChangeRatingClick(byValue) {
-        const {minRating, onChangeRatingClick} = this.props;
-        const nextMinRating = Math.max(minRating + byValue, 0);
+        const {minRating, onChangeRating} = this.props;
+        onChangeRating(minRating + byValue);
+    }
 
-        onChangeRatingClick(nextMinRating);
+    onResetClick = () => {
+        this.props.onChangeRating(null);
     }
 }
