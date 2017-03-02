@@ -22,8 +22,7 @@
       "https://geektimes.ru/article/*",
       "https://geektimes.ru/post/*"
     ],
-    "js": ["http://localhost:8080/bundle.js"],
-    "css": ["http://localhost:8080/styles.css"]
-  }],
-  "content_security_policy": "script-src 'self' 'unsafe-eval' http://localhost:8080; object-src 'self'"
+    "js": ["content-script/bundle.js"],
+    "css": ["content-script/styles.css"]
+  }]
 }
