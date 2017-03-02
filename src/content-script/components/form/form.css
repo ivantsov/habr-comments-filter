@@ -1,38 +1,28 @@
 .ratingContainer {
   display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #d5dddf;
 }
 
 .input {
-  display: block;
-  height: 20px;
-  padding: 0 10px;
-  margin: 0;
   font-size: 14px;
-  line-height: 34px;
   color: #3b3b3b;
-  border: 1px solid #d9d9d9;
-  box-sizing: border-box;
-}
-
-.ratingBtn {
-  color: #4e879c;
-  border: 1px solid #65a3be !important;
-  transition: 0.1s all ease-in;
-}
-
-.ratingBtn:hover {
-  color: #fff;
-  background-color: #4986a1;
-  border-color: transparent;
+  text-align: center;
+  width: 32px;
+  padding: 0 10px;
+  border: 1px solid #65a3be;
+  border-left-style: none;
+  border-right-style: none;
+  outline: none;
 }
 
 .ratingBtnLeft {
-  composes: ratingBtn;
   border-radius: 3px 0 0 3px;
 }
 
 .ratingBtnRight {
-  composes: ratingBtn;
   border-radius: 0 3px 3px 0;
 }
 
