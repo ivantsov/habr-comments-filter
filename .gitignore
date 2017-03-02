@@ -1,4 +1,4 @@
-.idea/
-node_modules/
-bower_components/
-coverage/
+.idea
+node_modules
+coverage
+*.log

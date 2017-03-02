@@ -1,0 +1,14 @@
+.container {
+  background-color: #f7f7f7;
+  position: fixed;
+  top: 4px;
+  right: 4px;
+  min-width: 190px;
+  padding: 16px;
+  border: 1px solid #bbb;
+  z-index: 9999;
+}
+
+.line {
+  margin-bottom: 8px;
+}

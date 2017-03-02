@@ -1,0 +1,32 @@
+.ratingContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #d5dddf;
+}
+
+.input {
+  font-size: 14px;
+  color: #3b3b3b;
+  text-align: center;
+  width: 32px;
+  padding: 0 10px;
+  border: 1px solid #65a3be;
+  border-left-style: none;
+  border-right-style: none;
+  outline: none;
+}
+
+.ratingBtnLeft {
+  border-radius: 3px 0 0 3px;
+}
+
+.ratingBtnRight {
+  border-radius: 0 3px 3px 0;
+}
+
+.resetBtnContainer {
+  display: flex;
+  justify-content: center;
+}

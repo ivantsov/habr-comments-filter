@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "version": "1.0.0",
+  "name": "Comments filter for Habrahabr",
+  "description": "Extension allows you to filter comments on Habrahabr based on the rating",
+  "author": "Alexander Ivantsov <alex@ivantsov.me>",
+  "minimum_chrome_version": "48",
+  "icons": {
+    "16": "assets/icon.png",
+    "32": "assets/icon.png",
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
+  },
+  "incognito": "spanning",
+  "offline_enabled": false,
+  "content_scripts": [{
+    "matches": [
+      "https://habrahabr.ru/company/*/blog/*",
+      "https://habrahabr.ru/article/*",
+      "https://habrahabr.ru/post/*",
+      "https://geektimes.ru/company/*/blog/*",
+      "https://geektimes.ru/article/*",
+      "https://geektimes.ru/post/*"
+    ],
+    "js": ["content-script/bundle.js"],
+    "css": ["content-script/styles.css"]
+  }]
+}

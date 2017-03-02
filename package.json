@@ -1,16 +1,46 @@
 {
-  "name": "HabrCommentsFilter",
-  "version": "0.0.1",
-  "dependencies": {},
+  "name": "habr-comments-filter",
+  "version": "1.0.0",
+  "description": "WebExtension for filtering comments by rating on Habrahabr & Geektimes",
+  "author": {
+    "name": "Alexander Ivantsov",
+    "email": "alex@ivantsov.me"
+  },
+  "repository": "https://github.com/ivantsov/habr-comments-filter.git",
+  "license": "MIT",
+  "scripts": {
+    "precommit": "npm run lint",
+    "clean": "rm -r dist",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest",
+    "test:coverage": "jest --coverage && codecov",
+    "test:watch": "jest --watch",
+    "start": "webpack --env dev",
+    "build:prod": "npm run clean && webpack --env prod",
+    "zip": "zip -r -X dist/yandex-mail-notifier.zip dist",
+    "deploy": "node ./scripts/deploy",
+    "publish": "npm run build:prod && npm run zip && npm run deploy",
+    "release": "npm run lint && npm run test && node ./scripts/release"
+  },
+  "dependencies": {
+    "preact": "^7.2.0"
+  },
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^0.5.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-includes": "^0.4.5",
-    "karma": "^0.12.19",
-    "karma-coverage": "^0.2.4",
-    "karma-jasmine": "^0.2.2",
-    "karma-phantomjs-launcher": "^0.1.4",
-    "phantomjs": "^1.9.7-15"
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-plugin-transform-class-properties": "^6.23.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.23.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "css-loader": "^0.26.2",
+    "eslint": "^3.16.1",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0",
+    "extract-text-webpack-plugin": "^2.0.0",
+    "style-loader": "^0.13.2",
+    "webpack": "^2.2.1"
   }
 }

@@ -1,0 +1,16 @@
+{
+  "plugins": [
+    ["transform-react-jsx", {
+      "pragma": "preact.h"
+    }],
+    "transform-object-rest-spread",
+    "transform-class-properties"
+  ],
+  "env": {
+    "test": {
+      "plugins": [
+        "transform-es2015-modules-commonjs"
+      ]
+    }
+  }
+}
