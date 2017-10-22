@@ -3,13 +3,13 @@
 // @description filter comments by rating
 // @author Alexander Ivantsov (alexivantsov@ya.ru)
 // @license MIT
-// @version 2.2.1
-// @include http://habrahabr.ru/post/*
-// @include http://habrahabr.ru/company/*/blog/*
-// @include http://geektimes.ru/post/*
-// @include http://geektimes.ru/company/*/blog/*
-// @include http://megamozg.ru/post/*
-// @include http://megamozg.ru/company/*/blog/*
+// @version 2.2.2
+// @include https://habrahabr.ru/post/*
+// @include https://habrahabr.ru/company/*/blog/*
+// @include https://geektimes.ru/post/*
+// @include https://geektimes.ru/company/*/blog/*
+// @include https://megamozg.ru/post/*
+// @include https://megamozg.ru/company/*/blog/*
 // ==/UserScript==
 
 var addScriptTag = function (funcToRun) {
@@ -78,9 +78,9 @@ addScriptTag(function(){
 
             commentsCount = 0;
 
-            $('.comment_item').each(function () {
+            $('.comment').each(function () {
                 comment = $(this);
-                rating = parseInt(comment.find('.comment_body').eq(0).find('.js-score').eq(0).text().replace('–', '-'), 10);
+                rating = parseInt(comment.find('.comment__head').eq(0).find('.js-score').eq(0).text().replace('–', '-'), 10);
                 id = parseInt(comment.prop('id').replace(/[^0-9]+/, ''), 10);
 
                 comments[id] = {
@@ -197,9 +197,9 @@ addScriptTag(function(){
                 $elem.removeClass('show-reply-hide');
                 $elem.text('Скрыть ответы');
 
-                parent = $elem.closest('.comment_item');
+                parent = $elem.closest('.comment');
 
-                parent.find('.comment_item').each(function () {
+                parent.find('.comment').each(function () {
                     $(this).show();
                 });
             }
@@ -207,9 +207,9 @@ addScriptTag(function(){
                 $elem.addClass('show-reply-hide');
                 $elem.text('Показать ответы');
 
-                parent = $elem.closest('.comment_item');
+                parent = $elem.closest('.comment');
 
-                parent.find('.comment_item').each(function () {
+                parent.find('.comment').each(function () {
                     if (!$(this).hasClass('cool-comment') && $(this).find('.cool-comment').length === 0) {
                         $(this).hide();
                     }
